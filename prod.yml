@@ -1,0 +1,12 @@
+all:
+  vars:
+prod:
+  hosts:
+    client:
+      ansible_host: 192.168.99.11
+      ansible_python_interpreter: /usr/bin/python3
+
+      
+      
+
+
