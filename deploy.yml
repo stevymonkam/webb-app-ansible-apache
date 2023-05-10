@@ -7,13 +7,37 @@
       - name: Install EPEL repo
         package: name=epel-release state=present
         when: ansible_distribution == "CentOS"
+      - name: Installation de Git et Wget
+        yum:
+          name: "{{ item }}"
+          state: present
+        loop:
+          - git
+          - wget
   tasks:
+    - name: Créer le répertoire /home/admin
+      file:
+        path: /home/admin
+        state: directory
+        mode: 0755
+      become: true
+    - name: Copier le template index.html.j2
+      template:
+        src: index.html.j2
+        dest: /home/admin/index.html
+        mode: 0644
     - name: Create Apache container
       docker_container:
         name: webapp
         image: httpd
         ports:
           - "80:80"
+        volumes:
+          - /home/admin/index.html:/usr/local/apache2/htdocs/index.html
+
+
+
+
 
 
 
