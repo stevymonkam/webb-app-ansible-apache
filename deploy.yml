@@ -2,8 +2,9 @@
 - name: "Apache installation using docker"
   hosts: prod
   become: true
-  vars:
-    pre_tasks:
+  vars_files:
+    - files/secrets/credentials.yml
+  pre_tasks:
       - name: Install EPEL repo
         package: name=epel-release state=present
         when: ansible_distribution == "CentOS"
